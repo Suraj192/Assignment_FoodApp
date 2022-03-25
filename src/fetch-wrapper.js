@@ -1,4 +1,4 @@
-class FetchWrapper {
+export class FetchWrapper {
   constructor(baseURL) {
     this.baseURL = baseURL;
   }
@@ -27,7 +27,7 @@ class FetchWrapper {
     return fetch(this.baseURL + endpoint, {
       method,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(body),
     }).then((response) => response.json());
