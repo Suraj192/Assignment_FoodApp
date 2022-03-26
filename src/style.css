@@ -1,1 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  background: linear-gradient(to bottom, lightblue, blue) no-repeat fixed;
+  font-family: sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: chocolate;
+}
+/*--------------------Form stylling --------------------*/
+form {
+  outline: groove;
+  border-radius: 5px;
+  margin: 1rem;
+}
+
+form h2 {
+  margin: 1rem 0 1rem 0;
+  color: chocolate;
+  border: groove;
+  border-radius: 5px;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: right;
+  width: 400px;
+  line-height: 26px;
+  padding: 0.2rem;
+  border-radius: 5px;
+}
+
+input,
+select {
+  width: 20rem;
+  height: 1.6rem;
+  flex: 0 0 200px;
+  margin: 2px 0 10px 10px;
+}
+/*----------------button stylling---------------*/
+#add,
+#reset {
+  padding: 0.2rem 1.5rem;
+  font-size: 1rem;
+  margin: 0.5rem;
+  background: linear-gradient(lightblue, blue);
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+}
+/*-------------------Card stylling---------------*/
+.grid {
+  border: groove;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.container {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: radial-gradient(rgb(187, 209, 245), rgb(3, 61, 252));
+  box-shadow: inset 0.5px 0.5px 5px black;
+  border: none;
+  border-radius: 5px;
+  margin: 1rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  vertical-align: center;
+  flex-direction: row;
+}
+
+.card ul {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+h4 {
+  display: block;
+  width: 80%;
+  text-align: center;
+  margin-left: 10%;
+  padding: 1rem;
+  border-radius: 5px;
+  background: whitesmoke;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+}
+
+.container h2,
+.container ul {
+  color: rgb(255, 255, 255);
+}
+
+/*------------------Media Adjustment---------------------*/
+
+@media only screen and (max-width: 550px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media only screen and (min-width: 550px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

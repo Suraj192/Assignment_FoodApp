@@ -463,15 +463,18 @@ var _snackbarMinCss = require("snackbar/dist/snackbar.min.css");
 var _auto = require("chart.js/auto");
 var _autoDefault = parcelHelpers.interopDefault(_auto);
 const foodname = document.querySelector("#option");
+const grid = document.querySelector(".grid");
+let myChart = {
+    destroy: ()=>{
+    }
+};
 let carbs = document.querySelector("#carbs");
 let protein = document.querySelector("#protein");
 let fat = document.querySelector("#fat");
 let foodadd = document.querySelector("#add");
 const del = document.querySelector("#reset");
-let myChart = {
-    destory: ()=>{
-    }
-};
+const heading4 = document.querySelector("h4");
+//let myChart = { destory: () => {} };
 const API = new _fetchWrapper.FetchWrapper("https://programmingjs-90a13-default-rtdb.europe-west1.firebasedatabase.app/");
 const foodnutrients = async (event)=>{
     event.preventDefault();
@@ -493,6 +496,43 @@ const foodnutrients = async (event)=>{
     };
     await API.post("chapters.json", datavalue);
     drawChart();
+    heading4.textContent = `Total Calories: ${log()}`;
+    const container = document.createElement("div");
+    container.classList.add("container");
+    const title = document.createElement("h2");
+    title.textContent = foodname.value;
+    const para = document.createElement("p");
+    para.textContent = `Total Calories: ${log()}`;
+    const card = document.createElement("div");
+    card.classList.add("card");
+    const unorCarbs = document.createElement("ul");
+    const lisCarbs = document.createElement("div");
+    lisCarbs.textContent = "Carbs";
+    const logdataCarbs = document.createElement("div");
+    logdataCarbs.textContent = carbs.value;
+    const unorProtein = document.createElement("ul");
+    const lisProtein = document.createElement("div");
+    lisProtein.textContent = "Protein";
+    const logdataProtein = document.createElement("div");
+    logdataProtein.textContent = protein.value;
+    const unorFat = document.createElement("ul");
+    const lisFat = document.createElement("div");
+    lisFat.textContent = "Fat";
+    const logdataFat = document.createElement("div");
+    logdataFat.textContent = fat.value;
+    grid.appendChild(container);
+    container.appendChild(title);
+    container.appendChild(para);
+    container.appendChild(card);
+    card.appendChild(unorCarbs);
+    card.appendChild(unorProtein);
+    card.appendChild(unorFat);
+    unorCarbs.appendChild(lisCarbs);
+    unorCarbs.appendChild(logdataCarbs);
+    unorProtein.appendChild(lisProtein);
+    unorProtein.appendChild(logdataProtein);
+    unorFat.appendChild(lisFat);
+    unorFat.appendChild(logdataFat);
 };
 const deleteAll = async ()=>{
     await API.delete("chapters.json");
@@ -500,8 +540,8 @@ const deleteAll = async ()=>{
 foodadd.addEventListener("click", foodnutrients);
 del.addEventListener("click", deleteAll);
 const drawChart = ()=>{
+    myChart.destroy();
     const mycharts = document.querySelector("#chart");
-    myChart.destory();
     myChart = new _autoDefault.default(mycharts, {
         type: "bar",
         data: {
@@ -540,6 +580,9 @@ const drawChart = ()=>{
             }
         }
     });
+};
+const log = ()=>{
+    return parseInt(carbs.value) * 4 + parseInt(protein.value) * 4 + parseInt(fat.value) * 9;
 };
 
 },{"./fetch-wrapper":"gQ6Ql","snackbar":"60sYh","snackbar/dist/snackbar.min.css":"gJlwf","chart.js/auto":"f3sfP","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"gQ6Ql":[function(require,module,exports) {
