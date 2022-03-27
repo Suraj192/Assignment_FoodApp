@@ -87,8 +87,9 @@ select {
 
 .card ul {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: column;
+  margin: 0.3rem;
 }
 
 h4 {

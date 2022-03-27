@@ -462,6 +462,9 @@ var _snackbarDefault = parcelHelpers.interopDefault(_snackbar);
 var _snackbarMinCss = require("snackbar/dist/snackbar.min.css");
 var _auto = require("chart.js/auto");
 var _autoDefault = parcelHelpers.interopDefault(_auto);
+var _adHtml = require("./adHtml");
+var _chart = require("./chart");
+var _log = require("./log");
 const foodname = document.querySelector("#option");
 const grid = document.querySelector(".grid");
 let myChart = {
@@ -474,7 +477,6 @@ let fat = document.querySelector("#fat");
 let foodadd = document.querySelector("#add");
 const del = document.querySelector("#reset");
 const heading4 = document.querySelector("h4");
-//let myChart = { destory: () => {} };
 const API = new _fetchWrapper.FetchWrapper("https://programmingjs-90a13-default-rtdb.europe-west1.firebasedatabase.app/");
 const foodnutrients = async (event)=>{
     event.preventDefault();
@@ -495,97 +497,17 @@ const foodnutrients = async (event)=>{
         }
     };
     await API.post("chapters.json", datavalue);
-    drawChart();
-    heading4.textContent = `Total Calories: ${log()}`;
-    const container = document.createElement("div");
-    container.classList.add("container");
-    const title = document.createElement("h2");
-    title.textContent = foodname.value;
-    const para = document.createElement("p");
-    para.textContent = `Total Calories: ${log()}`;
-    const card = document.createElement("div");
-    card.classList.add("card");
-    const unorCarbs = document.createElement("ul");
-    const lisCarbs = document.createElement("div");
-    lisCarbs.textContent = "Carbs";
-    const logdataCarbs = document.createElement("div");
-    logdataCarbs.textContent = carbs.value;
-    const unorProtein = document.createElement("ul");
-    const lisProtein = document.createElement("div");
-    lisProtein.textContent = "Protein";
-    const logdataProtein = document.createElement("div");
-    logdataProtein.textContent = protein.value;
-    const unorFat = document.createElement("ul");
-    const lisFat = document.createElement("div");
-    lisFat.textContent = "Fat";
-    const logdataFat = document.createElement("div");
-    logdataFat.textContent = fat.value;
-    grid.appendChild(container);
-    container.appendChild(title);
-    container.appendChild(para);
-    container.appendChild(card);
-    card.appendChild(unorCarbs);
-    card.appendChild(unorProtein);
-    card.appendChild(unorFat);
-    unorCarbs.appendChild(lisCarbs);
-    unorCarbs.appendChild(logdataCarbs);
-    unorProtein.appendChild(lisProtein);
-    unorProtein.appendChild(logdataProtein);
-    unorFat.appendChild(lisFat);
-    unorFat.appendChild(logdataFat);
+    _chart.drawChart();
+    heading4.textContent = `Total Calories: ${_log.log()}`;
+    _adHtml.adHtml();
 };
 const deleteAll = async ()=>{
     await API.delete("chapters.json");
 };
 foodadd.addEventListener("click", foodnutrients);
 del.addEventListener("click", deleteAll);
-const drawChart = ()=>{
-    myChart.destroy();
-    const mycharts = document.querySelector("#chart");
-    myChart = new _autoDefault.default(mycharts, {
-        type: "bar",
-        data: {
-            labels: [
-                "Carbs",
-                "Protein",
-                "Fat"
-            ],
-            datasets: [
-                {
-                    label: foodname.value,
-                    data: [
-                        carbs.value,
-                        protein.value,
-                        fat.value
-                    ],
-                    backgroundColor: [
-                        "rgba(255, 99, 132, 0.2)",
-                        "rgba(255, 159, 64, 0.2)",
-                        "rgba(255, 205, 86, 0.2)", 
-                    ],
-                    borderColor: [
-                        "rgb(255, 99, 132)",
-                        "rgb(255, 159, 64)",
-                        "rgb(255, 205, 86)", 
-                    ],
-                    borderWidth: 1
-                }, 
-            ]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-};
-const log = ()=>{
-    return parseInt(carbs.value) * 4 + parseInt(protein.value) * 4 + parseInt(fat.value) * 9;
-};
 
-},{"./fetch-wrapper":"gQ6Ql","snackbar":"60sYh","snackbar/dist/snackbar.min.css":"gJlwf","chart.js/auto":"f3sfP","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"gQ6Ql":[function(require,module,exports) {
+},{"./fetch-wrapper":"gQ6Ql","snackbar":"60sYh","snackbar/dist/snackbar.min.css":"gJlwf","chart.js/auto":"f3sfP","./adHtml":"fOS6C","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./chart":"8uuYm","./log":"4V9xS"}],"gQ6Ql":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FetchWrapper", ()=>FetchWrapper
@@ -13635,6 +13557,107 @@ function readStyle(options) {
 function styleChanged(style, prevStyle) {
     return prevStyle && JSON.stringify(style) !== JSON.stringify(prevStyle);
 }
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"fOS6C":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "adHtml", ()=>adHtml
+);
+const adHtml = ()=>{
+    const container = document.createElement("div");
+    container.classList.add("container");
+    const title = document.createElement("h2");
+    title.textContent = foodname.value;
+    const para = document.createElement("p");
+    para.textContent = `Total Calories: ${log()}`;
+    const card = document.createElement("div");
+    card.classList.add("card");
+    const unorCarbs = document.createElement("ul");
+    const lisCarbs = document.createElement("div");
+    lisCarbs.textContent = "Carbs";
+    const logdataCarbs = document.createElement("div");
+    logdataCarbs.textContent = carbs.value;
+    const unorProtein = document.createElement("ul");
+    const lisProtein = document.createElement("div");
+    lisProtein.textContent = "Protein";
+    const logdataProtein = document.createElement("div");
+    logdataProtein.textContent = protein.value;
+    const unorFat = document.createElement("ul");
+    const lisFat = document.createElement("div");
+    lisFat.textContent = "Fat";
+    const logdataFat = document.createElement("div");
+    logdataFat.textContent = fat.value;
+    grid.appendChild(container);
+    container.appendChild(title);
+    container.appendChild(para);
+    container.appendChild(card);
+    card.appendChild(unorCarbs);
+    card.appendChild(unorProtein);
+    card.appendChild(unorFat);
+    unorCarbs.appendChild(lisCarbs);
+    unorCarbs.appendChild(logdataCarbs);
+    unorProtein.appendChild(lisProtein);
+    unorProtein.appendChild(logdataProtein);
+    unorFat.appendChild(lisFat);
+    unorFat.appendChild(logdataFat);
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8uuYm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "drawChart", ()=>drawChart
+);
+const drawChart = ()=>{
+    myChart.destroy();
+    const mycharts = document.querySelector("#chart");
+    myChart = new Chart(mycharts, {
+        type: "bar",
+        data: {
+            labels: [
+                "Carbs",
+                "Protein",
+                "Fat"
+            ],
+            datasets: [
+                {
+                    label: foodname.value,
+                    data: [
+                        carbs.value,
+                        protein.value,
+                        fat.value
+                    ],
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(255, 159, 64, 0.2)",
+                        "rgba(255, 205, 86, 0.2)", 
+                    ],
+                    borderColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(255, 159, 64)",
+                        "rgb(255, 205, 86)", 
+                    ],
+                    borderWidth: 1
+                }, 
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4V9xS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "log", ()=>log
+);
+const log = ()=>{
+    return parseInt(carbs.value) * 4 + parseInt(protein.value) * 4 + parseInt(fat.value) * 9;
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}]},["kAaS7","i87aF"], "i87aF", "parcelRequire70d3")
 
