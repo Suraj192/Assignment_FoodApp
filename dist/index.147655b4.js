@@ -475,13 +475,14 @@ let carbs = document.querySelector("#carbs");
 let protein = document.querySelector("#protein");
 let fat = document.querySelector("#fat");
 let foodadd = document.querySelector("#add");
-const del = document.querySelector("#reset");
 const heading4 = document.querySelector("h4");
-const API = new _fetchWrapper.FetchWrapper("https://programmingjs-90a13-default-rtdb.europe-west1.firebasedatabase.app/");
+const API = new _fetchWrapper.FetchWrapper(//"https://programmingjs-90a13-default-rtdb.europe-west1.firebasedatabase.app/"
+"https://firestore.googleapis.com/v1/projects/programmingjs-90a13/databases/(default)/documents/");
+const endpoint = "suraj8345734";
 const foodnutrients = async (event)=>{
     event.preventDefault();
-    datavalue = {
-        nutrition: {
+    body = {
+        fields: {
             carbs: {
                 integerValue: carbs.value
             },
@@ -496,18 +497,24 @@ const foodnutrients = async (event)=>{
             }
         }
     };
-    await API.post("chapters.json", datavalue);
-    _chart.drawChart();
+    const newITEM = await API.post(endpoint, body);
+    console.log(newITEM);
+    _chart.drawChart(foodname, carbs, protein, fat);
     heading4.textContent = `Total Calories: ${_log.log()}`;
-    _adHtml.adHtml();
-};
-const deleteAll = async ()=>{
-    await API.delete("chapters.json");
+    _adHtml.adHtml(newITEM);
+    _snackbarDefault.default.show("Food Added succesfully");
 };
 foodadd.addEventListener("click", foodnutrients);
-del.addEventListener("click", deleteAll);
+const getResponse = async ()=>{
+    API.get(endpoint).then((data)=>data.document.map((item)=>_adHtml.adHtml(item)
+        )
+    );
+};
+API.get(endpoint).then((data)=>console.log(data.documents.map((item)=>item
+    ))
+);
 
-},{"./fetch-wrapper":"gQ6Ql","snackbar":"60sYh","snackbar/dist/snackbar.min.css":"gJlwf","chart.js/auto":"f3sfP","./adHtml":"fOS6C","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./chart":"8uuYm","./log":"4V9xS"}],"gQ6Ql":[function(require,module,exports) {
+},{"./fetch-wrapper":"gQ6Ql","snackbar":"60sYh","snackbar/dist/snackbar.min.css":"gJlwf","chart.js/auto":"f3sfP","./adHtml":"fOS6C","./chart":"8uuYm","./log":"4V9xS","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"gQ6Ql":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FetchWrapper", ()=>FetchWrapper
@@ -13563,30 +13570,32 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "adHtml", ()=>adHtml
 );
-const adHtml = ()=>{
+var _log = require("./log");
+const adHtml = (item)=>{
+    const grid = document.querySelector(".grid");
     const container = document.createElement("div");
     container.classList.add("container");
     const title = document.createElement("h2");
-    title.textContent = foodname.value;
+    title.textContent = item.fields.foodname.stringValue;
     const para = document.createElement("p");
-    para.textContent = `Total Calories: ${log()}`;
+    para.textContent = `Total Calories: ${_log.log()}`;
     const card = document.createElement("div");
     card.classList.add("card");
     const unorCarbs = document.createElement("ul");
     const lisCarbs = document.createElement("div");
     lisCarbs.textContent = "Carbs";
     const logdataCarbs = document.createElement("div");
-    logdataCarbs.textContent = carbs.value;
+    logdataCarbs.textContent = item.fields.carbs.integerValue;
     const unorProtein = document.createElement("ul");
     const lisProtein = document.createElement("div");
     lisProtein.textContent = "Protein";
     const logdataProtein = document.createElement("div");
-    logdataProtein.textContent = protein.value;
+    logdataProtein.textContent = item.fields.protein.integerValue;
     const unorFat = document.createElement("ul");
     const lisFat = document.createElement("div");
     lisFat.textContent = "Fat";
     const logdataFat = document.createElement("div");
-    logdataFat.textContent = fat.value;
+    logdataFat.textContent = item.fields.fat.integerValue;
     grid.appendChild(container);
     container.appendChild(title);
     container.appendChild(para);
@@ -13602,15 +13611,30 @@ const adHtml = ()=>{
     unorFat.appendChild(logdataFat);
 };
 
+},{"./log":"4V9xS","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4V9xS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "log", ()=>log
+);
+const log = ()=>{
+    return parseInt(carbs.value) * 4 + parseInt(protein.value) * 4 + parseInt(fat.value) * 9;
+};
+
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8uuYm":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "drawChart", ()=>drawChart
 );
-const drawChart = ()=>{
+var _auto = require("chart.js/auto");
+var _autoDefault = parcelHelpers.interopDefault(_auto);
+let myChart = {
+    destroy: ()=>{
+    }
+};
+const drawChart = (foodname, carbs, protein, fat)=>{
     myChart.destroy();
     const mycharts = document.querySelector("#chart");
-    myChart = new Chart(mycharts, {
+    myChart = new _autoDefault.default(mycharts, {
         type: "bar",
         data: {
             labels: [
@@ -13650,15 +13674,6 @@ const drawChart = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4V9xS":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "log", ()=>log
-);
-const log = ()=>{
-    return parseInt(carbs.value) * 4 + parseInt(protein.value) * 4 + parseInt(fat.value) * 9;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}]},["kAaS7","i87aF"], "i87aF", "parcelRequire70d3")
+},{"chart.js/auto":"f3sfP","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}]},["kAaS7","i87aF"], "i87aF", "parcelRequire70d3")
 
 //# sourceMappingURL=index.147655b4.js.map

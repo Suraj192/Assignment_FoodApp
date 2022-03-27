@@ -1,4 +1,6 @@
-export const drawChart = () => {
+import Chart from "chart.js/auto";
+let myChart = { destroy: () => {} };
+export const drawChart = (foodname, carbs, protein, fat) => {
   myChart.destroy();
   const mycharts = document.querySelector("#chart");
   myChart = new Chart(mycharts, {

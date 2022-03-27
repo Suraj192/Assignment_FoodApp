@@ -1,8 +1,10 @@
-export const adHtml = () => {
+import { log } from "./log";
+export const adHtml = (item) => {
+  const grid = document.querySelector(".grid");
   const container = document.createElement("div");
   container.classList.add("container");
   const title = document.createElement("h2");
-  title.textContent = foodname.value;
+  title.textContent = item.fields.foodname.stringValue;
   const para = document.createElement("p");
   para.textContent = `Total Calories: ${log()}`;
   const card = document.createElement("div");
@@ -11,19 +13,19 @@ export const adHtml = () => {
   const lisCarbs = document.createElement("div");
   lisCarbs.textContent = "Carbs";
   const logdataCarbs = document.createElement("div");
-  logdataCarbs.textContent = carbs.value;
+  logdataCarbs.textContent = item.fields.carbs.integerValue;
 
   const unorProtein = document.createElement("ul");
   const lisProtein = document.createElement("div");
   lisProtein.textContent = "Protein";
   const logdataProtein = document.createElement("div");
-  logdataProtein.textContent = protein.value;
+  logdataProtein.textContent = item.fields.protein.integerValue;
 
   const unorFat = document.createElement("ul");
   const lisFat = document.createElement("div");
   lisFat.textContent = "Fat";
   const logdataFat = document.createElement("div");
-  logdataFat.textContent = fat.value;
+  logdataFat.textContent = item.fields.fat.integerValue;
 
   grid.appendChild(container);
   container.appendChild(title);
